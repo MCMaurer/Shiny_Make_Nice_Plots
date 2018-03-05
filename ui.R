@@ -29,8 +29,9 @@ fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
       
-      # Output: Histogram ----
-      plotOutput(outputId = "scatterplot")
+      
+      plotOutput(outputId = "scatterplot"),
+      htmlOutput(outputId = "ggplotCode")
       
     )
   )
