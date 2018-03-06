@@ -2,6 +2,7 @@ library(tidyverse)
 library(ggthemes)
 library(ggExtra)
 library(viridis)
+library(png)
 
 function(input, output) {
   
@@ -51,6 +52,7 @@ function(input, output) {
   # )
   
   output$ggplotCode <- renderUI({
+    str0 <- "<b> ggplot code:</b><br/>"
     str1 <- "ggplot(mtcars, aes(x=wt,y=mpg))+"
     str2 <- "geom_point(aes(color=cyl))+"
     str3 <- "xlab('Car weight (lb/1000)')+"
@@ -71,7 +73,15 @@ function(input, output) {
     str12 <- if (input$nicerColors) "scale_color_viridis()+" else NULL
     str13 <- if (input$legendInPlot) paste("theme(legend.position = c(",input$legendX,",",input$legendY,"), legend.title.align = 0.5)", sep = "")
     
-    HTML(paste(str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, sep = '<br/>'))
+    HTML(paste(str0, str1, str2, str3, str4, str5, str6, str7, str8, str9, str10, str11, str12, str13, sep = '<br/>'))
 
+  })
+  
+  output$ink <- renderUI({
+    plot1 <- plot()
+    ggsave(plot1, filename = "testPlot.png", device = "png", dpi = 100)
+    f1 <- readPNG("testPlot.png")
+    ink <- sum(f1!=1)/length(f1)
+    HTML(paste("<b>Ink Makes Up ", round(ink,5)*100, " % of Plot</b>", '<br/>', '<br/>', sep = ""))
   })
 }

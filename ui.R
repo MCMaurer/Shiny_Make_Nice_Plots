@@ -29,9 +29,10 @@ fluidPage(
     # Main panel for displaying outputs ----
     mainPanel(
       
-      
+      htmlOutput(outputId = "ink"),
       plotOutput(outputId = "scatterplot"),
       htmlOutput(outputId = "ggplotCode")
+      
       
     )
   )
